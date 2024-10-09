@@ -102,7 +102,7 @@ function EditPage({navigation}: {navigation: any}){
                         <View style={dishCards.textCon}>
                             <Text style={dishCards.title}>{dish.name}</Text>
                             <Text style={dishCards.desc}>{dish.description}</Text>
-                            <Text style={dishCards.price}>${dish.price}</Text>
+                            <Text style={dishCards.price}>R{dish.price}</Text>
                         </View>
                     </TouchableOpacity>
                 ))
