@@ -20,8 +20,31 @@ export const DishController = {
         alert('Image upload failed. Please try again.');
     }
   },
-  async handleImageUpload(setImageUri: (uri: string | null) => void) {
+  async updateDish(dish: Dish, navigation: any) {
+    try {
+
+        let uploadedImageUrl: string = dish.image; 
+
+        if (dish.imageUri && dish.imageUri !== dish.image) {
+            uploadedImageUrl = await DishModel.uploadToCloudinary(dish.imageUri) || uploadedImageUrl;
+        }
+
+
+        const updatedDish = { ...dish, image: uploadedImageUrl };
+
+
+        await DishModel.updateDish(updatedDish); 
+        alert('Dish updated successfully!');
+        navigation.navigate('Edit'); 
+    } catch (error) {
+        console.error(error);
+        alert('Could not update the dish. Please try again.');
+    }
+  },
+  
+  async handleImageUpload(setImageUri: (uri: string | null) => void): Promise<string | null> {
     const uri = await DishModel.getImageUri();
     setImageUri(uri);
-  },
+    return uri; // Return the selected URI
+  }
 };

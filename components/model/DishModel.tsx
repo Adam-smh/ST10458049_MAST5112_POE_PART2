@@ -52,6 +52,31 @@ export const DishModel = {
     dishesArray.push(dish);
     await AsyncStorage.setItem('dishes', JSON.stringify(dishesArray));
   },
+  async saveDishes(dishes: Dish[]) {
+    try {
+        await AsyncStorage.setItem('dishes', JSON.stringify(dishes));
+    } catch (error) {
+        console.error('Error saving dishes:', error);
+    }
+  },
+  async updateDish(updatedDish: Dish): Promise<void> {
+    try {
+      const storedDishes = await AsyncStorage.getItem('dishes');
+      const dishes: Dish[] = storedDishes ? JSON.parse(storedDishes) : [];
+
+      // Find the index of the dish to be updated
+      const index = dishes.findIndex(dish => dish.id === updatedDish.id);
+      if (index !== -1) {
+        // Update the dish in the array
+        dishes[index] = updatedDish;
+        // Save the updated dishes array back to storage
+        await AsyncStorage.setItem('dishes', JSON.stringify(dishes));
+      }
+    } catch (error) {
+      console.error('Error updating dish:', error);
+      throw error; // Optional: rethrow the error to handle it in the controller
+    }
+  },
   async getImageUri(): Promise<string | null> {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) {

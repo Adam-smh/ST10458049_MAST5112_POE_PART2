@@ -62,12 +62,23 @@ const admin = StyleSheet.create({
         fontSize: 35,
     },
     genBtn:{
-        backgroundColor: '#CD5C08',
+        backgroundColor: '#322C2B',
         width: 150,
         height:40,
         borderRadius:30,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    courseBtnActive:{
+        backgroundColor: '#171413',
+    },
+    courseBtnInactive:{
+        backgroundColor: '#322C2B',
+    },
+    courseBtnText:{
+        textAlign: 'center',
+        fontSize: 20,
+        color: '#fff',
     },
 
 })
