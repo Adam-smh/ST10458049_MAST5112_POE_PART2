@@ -14,6 +14,7 @@ function HomePage( {navigation}: {navigation: any} ){
   const [dishes, setDishes] = useState<Dish[]>([]);
   const [filteredDishes, setFilteredDishes] = useState<Dish[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<string>('Starter'); 
+  const [avePrice, setAvePrice] = useState<number>(0);
   const priceTotal: number = 0
 
   const fetchDishes = async () => {
@@ -36,13 +37,17 @@ function HomePage( {navigation}: {navigation: any} ){
   }, []);
 
   useEffect(() => {
-    if (selectedCourse) {
-      const filtered = dishes.filter((dish) => dish.course === selectedCourse);
-      setFilteredDishes(filtered);
-    } else {
+    if (!selectedCourse) {
       setFilteredDishes(dishes);
     }
+    const filtered = dishes.filter((dish) => dish.course === selectedCourse);
+    setFilteredDishes(filtered);
   }, [selectedCourse, dishes]);
+
+  useEffect(() => {
+    const prices = filteredDishes.map((dish) => dish.price);
+    DishController.averageCalc(prices).then(setAvePrice);
+  }, [filteredDishes]);
 
   const handleCourseSelection = (course: string) => {
     setSelectedCourse(course);
@@ -109,6 +114,7 @@ function HomePage( {navigation}: {navigation: any} ){
         <View style={{backgroundColor: '#CD5C08', height:  150, justifyContent: 'center', alignItems: 'center',
             borderTopLeftRadius: 20, borderTopRightRadius: 20, overflow: 'hidden',}}>
                 <Text style={dishCards.title}>{dishes.length} Total Menu Items</Text>
+                <Text style={dishCards.title}>Average Price: R{avePrice} </Text>
             </View>
     </View>
   )

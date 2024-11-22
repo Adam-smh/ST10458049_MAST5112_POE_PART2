@@ -46,5 +46,13 @@ export const DishController = {
     const uri = await DishModel.getImageUri();
     setImageUri(uri);
     return uri; // Return the selected URI
+  },
+
+  async averageCalc(priceList: number[]): Promise<number> {
+    if (priceList.length === 0) {
+      return 0;
+    }
+    const sum = priceList.reduce((total, price) => total + price, 0);
+    return sum / priceList.length;
   }
 };

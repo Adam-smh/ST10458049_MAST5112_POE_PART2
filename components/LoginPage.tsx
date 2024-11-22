@@ -29,7 +29,7 @@ function LoginPage({navigation}: {navigation: any}){
                 
                 <Text style={general.titleText}>Login</Text>
                 <TextInput style={general.inputField} placeholderTextColor="#fff"  placeholder='Name' onChangeText={newText => setName(newText)} />
-                <TextInput style={general.inputField} placeholderTextColor="#fff"  placeholder='Password' onChangeText={newText => setPassword(newText)} />
+                <TextInput style={general.inputField} placeholderTextColor="#fff"  placeholder='Password' secureTextEntry={true} onChangeText={newText => setPassword(newText)} />
 
                 <TouchableOpacity style={general.genBtn} onPress={() => {
                     credCheck(Name, Password)}}>
